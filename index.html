@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nijjer AI - Next Gen Intelligence</title>
+    
+    <!-- Fonts: Inter for Apple-like cleanliness, JetBrains Mono for Hacker vibe -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg-black: #050505;
+            --bg-gray: #121212;
+            --border-gray: #2a2a2a;
+            --primary-orange: #ff5a00;
+            --primary-orange-glow: rgba(255, 90, 0, 0.4);
+            --text-main: #f5f5f7;
+            --text-muted: #86868b;
+            --radius-lg: 24px;
+            --radius-md: 16px;
+            --transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg-black);
+            color: var(--text-main);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            overflow-x: hidden;
+            background-image: 
+                linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+            background-size: 30px 30px;
+        }
+
+        /* Typography */
+        h1, h2, h3 {
+            font-weight: 800;
+            letter-spacing: -0.04em;
+        }
+        .mono {
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        /* Glassmorphism Navbar */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 20px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(5, 5, 5, 0.6);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-bottom: 1px solid var(--border-gray);
+            z-index: 1000;
+            transition: var(--transition);
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--text-main);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+        }
+
+        .logo span {
+            color: var(--primary-orange);
+            text-shadow: 0 0 15px var(--primary-orange-glow);
+        }
+
+        .nav-btn {
+            background: var(--bg-gray);
+            color: var(--text-main);
+            border: 1px solid var(--border-gray);
+            padding: 10px 20px;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            text-decoration: none;
+        }
+
+        .nav-btn:hover {
+            background: var(--primary-orange);
+            border-color: var(--primary-orange);
+            color: #000;
+            box-shadow: 0 0 20px var(--primary-orange-glow);
+            transform: translateY(-2px);
+        }
+
+        /* Hero Section */
+        header {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 120px 20px 50px;
+            position: relative;
+        }
+
+        .badge {
+            background: rgba(255, 90, 0, 0.1);
+            color: var(--primary-orange);
+            padding: 8px 16px;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 30px;
+            border: 1px solid rgba(255, 90, 0, 0.2);
+            animation: pulseGlow 2s infinite;
+        }
+
+        .hero-title {
+            font-size: clamp(3rem, 8vw, 6rem);
+            line-height: 1.1;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #fff 0%, #888 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero-title span {
+            background: linear-gradient(135deg, #ff8a00, var(--primary-orange));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero-subtitle {
+            color: var(--text-muted);
+            font-size: clamp(1rem, 2vw, 1.25rem);
+            max-width: 600px;
+            margin-bottom: 40px;
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 40px;
+            animation: bounce 2s infinite;
+            color: var(--text-muted);
+            font-size: 1.5rem;
+            opacity: 0.5;
+        }
+
+        /* Workspace / Gradio App Section */
+        .workspace-section {
+            padding: 100px 5%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 50px;
+            width: 100%;
+        }
+
+        .section-header h2 {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+        }
+
+        .section-header p {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+        }
+
+        /* Apple-style container for iframe */
+        .app-container {
+            width: 100%;
+            max-width: 1400px;
+            background: var(--bg-gray);
+            border: 1px solid var(--border-gray);
+            border-radius: var(--radius-lg);
+            padding: 10px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5), 0 0 30px var(--primary-orange-glow);
+            transition: var(--transition);
+            opacity: 0;
+            transform: translateY(40px);
+        }
+
+        .app-container.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .app-container:hover {
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.6), 0 0 50px rgba(255, 90, 0, 0.5);
+            border-color: var(--primary-orange);
+        }
+
+        /* Mac-like Window Controls */
+        .window-controls {
+            display: flex;
+            gap: 8px;
+            padding: 10px 15px 15px;
+        }
+
+        .dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+        .dot.red { background: #ff5f56; }
+        .dot.yellow { background: #ffbd2e; }
+        .dot.green { background: #27c93f; }
+
+        .iframe-wrapper {
+            width: 100%;
+            height: 85vh;
+            min-height: 600px;
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            background: var(--bg-black);
+            position: relative;
+        }
+
+        /* Loader inside iframe wrapper */
+        .loader {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+            color: var(--primary-orange);
+            z-index: 0;
+        }
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid rgba(255, 90, 0, 0.2);
+            border-top-color: var(--primary-orange);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            position: relative;
+            z-index: 1;
+            background: transparent;
+        }
+
+        /* Footer */
+        footer {
+            padding: 40px 5%;
+            text-align: center;
+            border-top: 1px solid var(--border-gray);
+            margin-top: 50px;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+        footer span {
+            color: var(--primary-orange);
+        }
+
+        /* Animations */
+        @keyframes pulseGlow {
+            0% { box-shadow: 0 0 0 0 rgba(255, 90, 0, 0.4); }
+            70% { box-shadow: 0 0 0 10px rgba(255, 90, 0, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(255, 90, 0, 0); }
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-20px); }
+            60% { transform: translateY(-10px); }
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Reveal Animation Classes */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .app-container {
+                border-radius: 16px;
+                padding: 5px;
+            }
+            .iframe-wrapper {
+                border-radius: 12px;
+                height: 75vh;
+            }
+            nav { padding: 15px 5%; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav>
+        <div class="logo">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--primary-orange)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+            </svg>
+            Nijjer<span>AI</span>
+        </div>
+        <a href="#workspace" class="nav-btn">Launch App</a>
+    </nav>
+
+    <!-- Hero Header -->
+    <header id="home">
+        <div class="badge mono reveal">v2.0 ONLINE</div>
+        <h1 class="hero-title reveal" style="transition-delay: 0.1s;">
+            Execute with <br><span>Nijjers.</span>
+        </h1>
+        <p class="hero-subtitle reveal" style="transition-delay: 0.2s;">
+            Experience a seamless, high-performance workspace wrapped in a fluid, hacker-grade interface. Build, deploy, and scale.
+        </p>
+        <a href="#workspace" class="nav-btn reveal" style="padding: 15px 30px; font-size: 1rem; transition-delay: 0.3s;">Initialize Environment</a>
+        
+        <div class="scroll-indicator">↓</div>
+    </header>
+
+    <!-- Interactive Workspace Section -->
+    <section id="workspace" class="workspace-section">
+        <div class="section-header reveal">
+            <h2>Neural Interface</h2>
+            <p class="mono">Connected to: https:/nijjer.ai/</p>
+        </div>
+
+        <div class="app-container" id="app-window">
+            <div class="window-controls">
+                <div class="dot red"></div>
+                <div class="dot yellow"></div>
+                <div class="dot green"></div>
+            </div>
+            <div class="iframe-wrapper">
+                <!-- Loader shows while iframe is loading -->
+                <div class="loader">
+                    <div class="spinner"></div>
+                    <div class="mono" style="font-size: 0.8rem; letter-spacing: 2px;">ESTABLISHING CONNECTION...</div>
+                </div>
+                <!-- Gradio App Frame -->
+                <iframe src="https://3902d073c1d22222ef.gradio.live/" title="Nijjer AI Gradio Application" allow="camera; microphone; clipboard-read; clipboard-write; display-capture" loading="lazy"></iframe>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2026 <span>Nijjer AI</span>. Engineered for excellence. All systems operational.</p>
+    </footer>
+
+    <!-- JavaScript for Animations and Interactions -->
+    <script>
+        // Reveal elements on scroll
+        function reveal() {
+            var reveals = document.querySelectorAll(".reveal");
+            for (var i = 0; i < reveals.length; i++) {
+                var windowHeight = window.innerHeight;
+                var elementTop = reveals[i].getBoundingClientRect().top;
+                var elementVisible = 100;
+
+                if (elementTop < windowHeight - elementVisible) {
+                    reveals[i].classList.add("active");
+                }
+            }
+        }
+        window.addEventListener("scroll", reveal);
+        reveal(); // Trigger on load
+
+        // Specific intersection observer for the main app container for a smoother pop-in
+        const appWindow = document.getElementById('app-window');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if(entry.isIntersecting) {
+                    appWindow.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        observer.observe(appWindow);
+
+        // Navbar styling on scroll
+        const nav = document.querySelector('nav');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                nav.style.background = 'rgba(5, 5, 5, 0.85)';
+                nav.style.boxShadow = '0 4px 30px rgba(0, 0, 0, 0.5)';
+            } else {
+                nav.style.background = 'rgba(5, 5, 5, 0.6)';
+                nav.style.boxShadow = 'none';
+            }
+        });
+    </script>
+</body>
+</html>
